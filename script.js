@@ -236,7 +236,7 @@ function checkForGameOver() {
 
 //check for win
 function checkForWin() {
-  if (score === 50) {
+  if (score === 150) {
     //stop each ghost
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
     //remove the eventlistener for the control function
