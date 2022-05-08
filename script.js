@@ -248,7 +248,7 @@ function checkForWin() {
 }
 
 window.addEventListener("keydown", function(e) {
-  if(e.key == "ArrowDown" /* Down arrow */) {
+  if(e.key == "ArrowDown"  || e.key == "ArrowUp" || e.key == "ArrowLeft" || e.key == "ArrowRight" /* Down arrow */) {
     e.preventDefault(); // prevents the "default" action from happening, in this case, scrolling down.
   }
 }, false);
