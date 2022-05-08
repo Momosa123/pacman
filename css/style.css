@@ -63,3 +63,8 @@ body {
 .scared-ghost {
   background-color: aquamarine;
 }
+
+#startGame{
+  padding: 5px 10px;
+  border-radius: 10px;margin-top: 1rem;
+}

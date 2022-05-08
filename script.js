@@ -1,7 +1,9 @@
 const width = 28;
 const grid = document.querySelector(".grid");
 const scoreDisplay = document.querySelector("#score");
-
+let pacmanCurrentIndex = 490;
+  
+  
 let squares = [];
 let score = 0;
 scoreDisplay.innerHTML = score;
@@ -71,8 +73,6 @@ function createBoard() {
 createBoard();
 
 // starting position of pacman
-let pacmanCurrentIndex = 490;
-squares[pacmanCurrentIndex].classList.add("pacman");
 
 function control(e) {
   e.stopPropagation();
@@ -133,7 +133,7 @@ function control(e) {
   
 }
 
-document.addEventListener("keyup", control);
+
 
 function pacDotEaten() {
   if (squares[pacmanCurrentIndex].classList.contains("pac-dot")) {
@@ -149,7 +149,7 @@ function powerPelletEaten() {
     score += 10;
     scoreDisplay.innerHTML = score;
     ghosts.forEach((ghost) => (ghost.isScared = true));
-    setTimeout(unScareGhosts, 100000);
+    setTimeout(unScareGhosts, 10000);
   }
 }
 
@@ -167,20 +167,14 @@ class Ghost {
   }
 }
 
-const ghosts = [
+let ghosts = [
   new Ghost("blinky", 348, 250),
   new Ghost("pinky", 376, 400),
   new Ghost("inky", 351, 300),
   new Ghost("clyde", 379, 500),
 ];
 
-//draw my ghosts onto my grid
-ghosts.forEach((ghost) => {
-  squares[ghost.currentIndex].classList.add(ghost.className);
-  squares[ghost.currentIndex].classList.add("ghost");
-});
 
-ghosts.forEach((ghost) => moveGhost(ghost));
 function moveGhost(ghost) {
   const directions = [-1, +1, -width, +width];
   let direction = directions[Math.floor(Math.random() * directions.length)];
@@ -220,9 +214,8 @@ function moveGhost(ghost) {
     checkForGameOver();
   }, ghost.speed);
 }
-
-//Check for game over
-function checkForGameOver() {
+ //Check for game over
+ function checkForGameOver() {
   if (
     squares[pacmanCurrentIndex].classList.contains("ghost") &&
     !squares[pacmanCurrentIndex].classList.contains("scared-ghost")
@@ -231,8 +224,11 @@ function checkForGameOver() {
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
     //remove eventlistener from our control function
     document.removeEventListener("keyup", control);
-    scoreDisplay.innerHTML = "You have lost 😫";
+    scoreDisplay.innerHTML = "Vous avez perdu 😫";
+    document.getElementById("startGame").disabled = false
+    endGame()
   }
+  
 }
 
 //check for win
@@ -243,12 +239,56 @@ function checkForWin() {
     //remove the eventlistener for the control function
     document.removeEventListener("keyup", control);
     //tell our user we have won
-    scoreDisplay.innerHTML = "You WIN 🚀";
+    scoreDisplay.innerHTML = "Vous avez gagné 🚀";
+    document.getElementById("startGame").disabled = false
+    endGame()
   }
+  
 }
+function endGame(){
+  ghosts.forEach((ghost) => {
+    squares[ghost.currentIndex].classList.remove(ghost.className);
+    squares[ghost.currentIndex].classList.remove("ghost");
+    squares[pacmanCurrentIndex].classList.remove("pacman");
+  });
+}
+function initalize(){
+  createBoard();
+  score = 0
+  pacmanCurrentIndex = 490;
+squares[pacmanCurrentIndex].classList.add("pacman");
+document.addEventListener("keyup", control);
+ghosts = [
+  new Ghost("blinky", 348, 250),
+  new Ghost("pinky", 376, 400),
+  new Ghost("inky", 351, 300),
+  new Ghost("clyde", 379, 500),
+];
+  ghosts.forEach((ghost) => {
+    squares[ghost.currentIndex].classList.add(ghost.className);
+    squares[ghost.currentIndex].classList.add("ghost");
+  });
+  ghosts.forEach((ghost) => moveGhost(ghost))
+}
+function startGame(){
+  
+  
+initalize()
+// draw my ghosts onto my grid
 
-window.addEventListener("keydown", function(e) {
-  if(e.key == "ArrowDown"  || e.key == "ArrowUp" || e.key == "ArrowLeft" || e.key == "ArrowRight" /* Down arrow */) {
-    e.preventDefault(); // prevents the "default" action from happening, in this case, scrolling down.
-  }
-}, false);
+  
+  
+  window.addEventListener("keydown", function(e) {
+    if(e.key == "ArrowDown"  || e.key == "ArrowUp" || e.key == "ArrowLeft" || e.key == "ArrowRight" /* Down arrow */) {
+      e.preventDefault(); // prevents the "default" action from happening, in this case, scrolling down.
+    }
+  }, false);
+
+
+
+}
+document.getElementById("startGame").addEventListener("click",()=>{
+  
+  startGame()
+
+})
