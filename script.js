@@ -158,10 +158,12 @@ function unScareGhosts() {
 }
 
 const pacMan = {
-  initalPosition: 490,
-  currentIndex:490,
-  setInitialPosition(){squares[this.initalPosition].classList.add("pacman")}
+  initialPosition:490,
+  setInitialPosition(){squares[this.initialPosition].classList.add("pacman")}
 }
+
+
+
 class Ghost {
   constructor(className, startIndex, speed) {
     this.className = className;
@@ -243,7 +245,7 @@ let ghosts = [
 
 //check for win
 function checkForWin() {
-  if (score === 150) {
+  if (score === 50) {
     //stop each ghost
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
     //remove the eventlistener for the control function
@@ -259,13 +261,16 @@ function endGame(){
   ghosts.forEach((ghost) => {
     squares[ghost.currentIndex].classList.remove(ghost.className);
     squares[ghost.currentIndex].classList.remove("ghost");
+    squares[ghost.currentIndex].classList.remove("scared-ghost");
     squares[pacMan.currentIndex].classList.remove("pacman");
   });
 }
 function initalize(){
   createBoard();
   score = 0
+  scoreDisplay.innerHTML = score;
   pacMan.setInitialPosition()
+  pacMan.currentIndex = pacMan.initialPosition
   document.addEventListener("keyup", control);
   ghosts = [
     new Ghost("blinky", 348, 250),
