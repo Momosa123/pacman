@@ -75,10 +75,11 @@ let pacmanCurrentIndex = 490;
 squares[pacmanCurrentIndex].classList.add("pacman");
 
 function control(e) {
+  e.stopPropagation();
   squares[pacmanCurrentIndex].classList.remove("pacman");
   switch (e.key) {
     case "ArrowDown":
-      console.log("pressed down");
+      
       if (
         !squares[pacmanCurrentIndex + width].classList.contains("wall") &&
         !squares[pacmanCurrentIndex + width].classList.contains("ghost-lair") &&
@@ -86,10 +87,9 @@ function control(e) {
       ) {
         pacmanCurrentIndex += width;
       }
-
       break;
     case "ArrowUp":
-      console.log("pressed up");
+      
       if (
         !squares[pacmanCurrentIndex - width].classList.contains("wall") &&
         !squares[pacmanCurrentIndex - width].classList.contains("ghost-lair") &&
@@ -100,7 +100,7 @@ function control(e) {
 
       break;
     case "ArrowRight":
-      console.log("pressed right");
+      
       if (pacmanCurrentIndex === 391) {
         pacmanCurrentIndex = 364;
       } else if (
@@ -112,7 +112,7 @@ function control(e) {
       }
       break;
     case "ArrowLeft":
-      console.log("pressed left");
+      
       if (pacmanCurrentIndex === 364) {
         pacmanCurrentIndex = 391;
       } else if (
@@ -130,7 +130,7 @@ function control(e) {
   powerPelletEaten();
   checkForWin();
   checkForGameOver();
-  e.stopPropagation();
+  
 }
 
 document.addEventListener("keyup", control);
@@ -248,7 +248,7 @@ function checkForWin() {
 }
 
 window.addEventListener("keydown", function(e) {
-  if(e.key == 40 /* Down arrow */) {
+  if(e.key == "ArrowDown" /* Down arrow */) {
     e.preventDefault(); // prevents the "default" action from happening, in this case, scrolling down.
   }
 }, false);
