@@ -46,7 +46,7 @@ const layout = [
   0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1,
 ];
-
+console.log(layout.length)
 // create board
 
 function createBoard() {
@@ -133,11 +133,12 @@ function control(e) {
   
 }
 
-
+const removedDotIndex=[]
 
 function pacDotEaten() {
   if (squares[pacMan.currentIndex].classList.contains("pac-dot")) {
     squares[pacMan.currentIndex].classList.remove("pac-dot");
+    removedDotIndex.push(pacMan.currentIndex)
     score++;
     scoreDisplay.innerHTML = score;
   }
@@ -224,8 +225,6 @@ let ghosts = [
 
 
 
-
-
  //Check for game over
  function checkForGameOver() {
   if (
@@ -245,7 +244,7 @@ let ghosts = [
 
 //check for win
 function checkForWin() {
-  if (score >= 100) {
+  if (score >= 50) {
     //stop each ghost
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
     //remove the eventlistener for the control function
@@ -258,6 +257,7 @@ function checkForWin() {
   
 }
 function endGame(){
+  console.log(removedDotIndex)
   ghosts.forEach((ghost) => {
     squares[ghost.currentIndex].classList.remove(ghost.className);
     squares[ghost.currentIndex].classList.remove("ghost");
@@ -265,8 +265,12 @@ function endGame(){
     squares[pacMan.currentIndex].classList.remove("pacman");
   });
 }
+function renewDot(){
+  removedDotIndex.forEach(index=>squares[index].classList.add("pac-dot"))
+  
+}
 function initalize(){
-  createBoard();
+  renewDot();
   score = 0
   scoreDisplay.innerHTML = score;
   pacMan.setInitialPosition()
