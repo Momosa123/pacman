@@ -130,6 +130,7 @@ function control(e) {
   powerPelletEaten();
   checkForWin();
   checkForGameOver();
+  e.stopPropagation();
 }
 
 document.addEventListener("keyup", control);
