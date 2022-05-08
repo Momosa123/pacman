@@ -246,3 +246,9 @@ function checkForWin() {
     scoreDisplay.innerHTML = "You WIN 🚀";
   }
 }
+
+window.addEventListener("keydown", function(e) {
+  if(e.key == 40 /* Down arrow */) {
+    e.preventDefault(); // prevents the "default" action from happening, in this case, scrolling down.
+  }
+}, false);
